@@ -6,7 +6,7 @@
 vimrcとかdotfilesLink.shにあるファイルがないことを仮定している
 ```bash
 $ cd ~/
-$ git clone https://github.com/gedyra/dotfiles.git
+$ git clone git@github.com/gedyra/dotfiles.git
 $ sh dotfilesLink.sh
 ```
 ## ファイルが追加されたとき
