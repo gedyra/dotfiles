@@ -47,9 +47,6 @@ call dein#add('Shougo/vimshell', {'rev':'3787e5'})
 call dein#add('Shougo/unite.vim')
 call dein#add('ujihisa/unite-colorscheme', {'depends' : 'Shougo-unite.vim'})
 
-" If you 'call dein#source('PLAGIN_NAME')' manually
-call dein#add('Shougo/vimfilter', {'lazy' : 1})
-
 "Required:
 call dein#end()
 call dein#save_state()
