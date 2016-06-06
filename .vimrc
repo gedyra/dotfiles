@@ -89,6 +89,7 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 \   'ruby': $HOME . '/dicts/ruby.dict',
 \}
 
+
 "補完
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
