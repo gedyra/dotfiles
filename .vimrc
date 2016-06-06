@@ -38,7 +38,7 @@ call dein#add('plasticboy/vim-markdown')
 call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
 call dein#add('vim-scripts/Zenburn')
-
+call dein#add('anekos/felis-cat-igirisu-toast-express')
 
 "You can specify revision/branch/tag.
 call dein#add('Shougo/vimshell', {'rev':'3787e5'})
