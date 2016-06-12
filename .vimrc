@@ -1,3 +1,6 @@
+set encoding=utf-8
+set fileformats=unix,dos,mac
+
 "dein Scripts----- 
 
 if &compatible
@@ -53,10 +56,11 @@ call dein#end()
 call dein#save_state()
 endif
 
-filetype plugin indent on
-
 "End dein Scripts-----
 
+filetype plugin indent on
+
+"開き括弧を消したときに隣接する開き括弧を消す
 function! DeleteParenthesesAdjoin()
     let pos = col(".") - 1  " カーソルの位置．1からカウント
     let str = getline(".")  " カーソル行の文字列
@@ -110,13 +114,13 @@ set number
 set title
 set showmatch
 syntax enable
+set showcmd
 
 "インデント
-set cindent
-set expandtab
-set autoindent
-set softtabstop=4
-filetype plugin indent on
+""set cindent
+""set expandtab
+""set autoindent
+""set shiftwidth=2
 
 "検索
 set ignorecase
@@ -125,9 +129,8 @@ set wrapscan
 
 "Ruby
 autocmd FileType ruby setl iskeyword+=?
-
-set encoding=utf-8
-set fileformats=unix,dos,mac
-
 "markdown
 au BufRead,BufNewFile *.md set filetype=markdown
+"HTML
+let g_indent_inctags = "html,body,head,tbody"
+
