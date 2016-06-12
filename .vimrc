@@ -4,12 +4,6 @@ if &compatible
     set nocompatible
 endif
 
-" Install plugins when Vim started
-augroup PluginInstall
-    autocmd!
-    autocmd VimEnter * if dein#check_install() | call dein#install() | endif
-augroup END
-
 " Install dir
 let s:plugin_dir = expand('~/.vim/bundle')
 " Add install dir to runtimepath
@@ -21,6 +15,13 @@ if !isdirectory(s:dein_dir)
     call mkdir(s:dein_dir, 'p')
     silent execute printf('!git clone %s %s', 'https://github.com/Shougo/dein.vim', s:dein_dir)
 endif
+
+" Install plugins when Vim started
+augroup PluginInstall
+    autocmd!
+    autocmd VimEnter * if dein#check_install() | call dein#install() | endif
+augroup END
+
 
 if dein#load_state(s:plugin_dir)
 call dein#begin(s:plugin_dir)
