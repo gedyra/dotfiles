@@ -50,6 +50,8 @@ call dein#add('Shougo/vimshell', {'rev':'3787e5'})
 " If dependency exists
 call dein#add('Shougo/unite.vim')
 call dein#add('ujihisa/unite-colorscheme', {'depends' : 'Shougo-unite.vim'})
+call dein#add('kmnk/vim-unite-giti')
+call dein#add('tpope/vim-fugitive')
 
 "Required:
 call dein#end()
