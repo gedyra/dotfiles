@@ -1,4 +1,7 @@
-"dein Scripts----- 
+set encoding=utf-8
+set fileformats=unix,dos,mac
+
+"dein Scripts-----
 
 if &compatible
     set nocompatible
@@ -7,7 +10,7 @@ endif
 " Install dir
 let s:plugin_dir = expand('~/.vim/bundle')
 " Add install dir to runtimepath
-let s:dein_dir = s:plugin_dir . 'repos/github.com/Shougo/dein.vim'
+let s:dein_dir = s:plugin_dir . '/repos/github.com/Shougo/dein.vim'
 execute 'set runtimepath+=' . s:dein_dir
 
 " If dein hadn't installed yet, 'git clone' first.
@@ -32,14 +35,28 @@ call dein#add('Shougo/dein.vim')
 "Add or remove your plugins here:
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
-call dein#add('Shougo/neocomplcache')
+call dein#add('Shougo/neocomplete.vim')
 call dein#add('pocke/dicts')
+
 call dein#add('vim-ruby/vim-ruby')
+
 call dein#add('plasticboy/vim-markdown')
 call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
+
+"Colorscheme
 call dein#add('vim-scripts/Zenburn')
+call dein#add('tomasr/molokai')
+
+"Utils
 call dein#add('anekos/felis-cat-igirisu-toast-express')
+call dein#add('itchyny/lightline.vim')
+
+call dein#add('nathanaelkane/vim-indent-guides')
+call dein#add('bronson/vim-trailing-whitespace')
+
+call dein#add('hokaccha/vim-html5validator')
+
 
 "You can specify revision/branch/tag.
 call dein#add('Shougo/vimshell', {'rev':'3787e5'})
@@ -47,16 +64,19 @@ call dein#add('Shougo/vimshell', {'rev':'3787e5'})
 " If dependency exists
 call dein#add('Shougo/unite.vim')
 call dein#add('ujihisa/unite-colorscheme', {'depends' : 'Shougo-unite.vim'})
+call dein#add('kmnk/vim-unite-giti')
+call dein#add('tpope/vim-fugitive')
 
 "Required:
 call dein#end()
 call dein#save_state()
 endif
 
-filetype plugin indent on
-
 "End dein Scripts-----
 
+filetype plugin indent on
+
+"開き括弧を消したときに隣接する開き括弧を消す
 function! DeleteParenthesesAdjoin()
     let pos = col(".") - 1  " カーソルの位置．1からカウント
     let str = getline(".")  " カーソル行の文字列
@@ -65,7 +85,7 @@ function! DeleteParenthesesAdjoin()
     let cnt = 0
 
     let output = ""
-	    
+
     " カーソルが行末の場合
     if pos == strlen(str)
 	return "\b"
@@ -85,13 +105,86 @@ endfunction
 inoremap <silent> <BS> <C-R>=DeleteParenthesesAdjoin()<CR>
 
 "プラグインの設定
+" 補完(neocomplete)
+
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
 let g:neocomplete#sources#dictionary#dictionaries = {
 \   'ruby': $HOME . '/dicts/ruby.dict',
 \}
 
 
-"補完
+
+"括弧補完
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
 inoremap ( ()<LEFT>
@@ -101,8 +194,16 @@ inoremap ' ''<LEFT>
 "フォントとカラースキーム
 set guifont=Ricty:h11
 set guifontwide=Ricty:h11
-colorscheme zenburn 
+colorscheme zenburn
 set t_Co=256
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_start_level=2
+let g:indent_guides_auto_colors=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd Ctermbg=240
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven Ctermbg=234
+let g:indent_guides_color_change_percent = 30
+let g:indent_guides_guide_size = 1
+
 
 set background=dark
 
@@ -111,24 +212,16 @@ set number
 set title
 set showmatch
 syntax enable
-
-"インデント
-set cindent
-set expandtab
-set autoindent
-set softtabstop=4
-filetype plugin indent on
+set showcmd
 
 "検索
 set ignorecase
 set smartcase
-set wrapscan                      
+set wrapscan
 
 "Ruby
 autocmd FileType ruby setl iskeyword+=?
-
-set encoding=utf-8
-set fileformats=unix,dos,mac
-
 "markdown
 au BufRead,BufNewFile *.md set filetype=markdown
+"HTML
+let g_indent_inctags = "html,body,head,tbody"
