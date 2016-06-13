@@ -10,7 +10,7 @@ endif
 " Install dir
 let s:plugin_dir = expand('~/.vim/bundle')
 " Add install dir to runtimepath
-let s:dein_dir = s:plugin_dir . 'repos/github.com/Shougo/dein.vim'
+let s:dein_dir = s:plugin_dir . '/repos/github.com/Shougo/dein.vim'
 execute 'set runtimepath+=' . s:dein_dir
 
 " If dein hadn't installed yet, 'git clone' first.
