@@ -205,7 +205,7 @@ let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
 
 
-set background=dark
+"set background=dark
 
 "UI周り
 set number
