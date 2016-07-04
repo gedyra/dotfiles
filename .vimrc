@@ -49,14 +49,23 @@ call dein#add('vim-scripts/Zenburn')
 call dein#add('tomasr/molokai')
 
 "Utils
-call dein#add('anekos/felis-cat-igirisu-toast-express')
+"call dein#add('anekos/felis-cat-igirisu-toast-express')
 call dein#add('itchyny/lightline.vim')
+call dein#add('vim-scripts/fcitx.vim')
 
 call dein#add('nathanaelkane/vim-indent-guides')
 call dein#add('bronson/vim-trailing-whitespace')
 
 call dein#add('hokaccha/vim-html5validator')
 
+call dein#add('thinca/vim-ref')
+
+"Haskell
+call dein#add('kana/vim-filetype-haskell')
+call dein#add('eagletmt/ghcmod-vim')
+call dein#add('ujihisa/neco-ghc')
+call dein#add('osyo-manga/vim-watchdogs')
+call dein#add('ujihisa/ref-hoogle')
 
 "You can specify revision/branch/tag.
 call dein#add('Shougo/vimshell', {'rev':'3787e5'})
@@ -66,6 +75,7 @@ call dein#add('Shougo/unite.vim')
 call dein#add('ujihisa/unite-colorscheme', {'depends' : 'Shougo-unite.vim'})
 call dein#add('kmnk/vim-unite-giti')
 call dein#add('tpope/vim-fugitive')
+call dein#add('ujihisa/unite-haskellimport')
 
 "Required:
 call dein#end()
