@@ -1,5 +1,5 @@
 set encoding=utf-8
-set fileformats=unix,dos,mac
+set fileformats=unix,dos
 
 "dein Scripts-----
 
@@ -52,68 +52,6 @@ if dein#load_state(s:plugin_dir)
 	call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 
 	call dein#add('itchyny/lightline.vim')
-	set laststatus=2
-
-	let g:lightline = {
-				\ 'colorscheme': 'wombat',
-				\ 'mode_map': {'c': 'NORMAL'},
-				\ 'active': {
-				\   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-				\ },
-				\ 'component_function': {
-				\   'modified': 'LightLineModified',
-				\   'readonly': 'LightLineReadonly',
-				\   'fugitive': 'LightLineFugitive',
-				\   'filename': 'LightLineFilename',
-				\   'fileformat': 'LightLineFileformat',
-				\   'filetype': 'LightLineFiletype',
-				\   'fileencoding': 'LightLineFileencoding',
-				\   'mode': 'LightLineMode'
-				\ }
-				\ }
-
-	function! LightLineModified()
-		return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-	endfunction
-
-	function! LightLineReadonly()
-		return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
-	endfunction
-
-	function! LightLineFilename()
-		return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-					\ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-					\  &ft == 'unite' ? unite#get_status_string() :
-					\  &ft == 'vimshell' ? vimshell#get_status_string() :
-					\ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-					\ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-	endfunction
-
-	function! LightLineFugitive()
-		if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-			return fugitive#head()
-		else
-			return ''
-		endif
-	endfunction
-
-	function! LightLineFileformat()
-		return winwidth(0) > 70 ? &fileformat : ''
-	endfunction
-
-	function! LightLineFiletype()
-		return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-	endfunction
-
-	function! LightLineFileencoding()
-		return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
-	endfunction
-
-	function! LightLineMode()
-		return winwidth(0) > 60 ? lightline#mode() : ''
-	endfunction
-
-
 	call dein#add('vim-scripts/fcitx.vim')
 
 	call dein#add('nathanaelkane/vim-indent-guides')
@@ -277,9 +215,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven Ctermbg=234
 let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
 
-
-set background=dark
-
 "UI周り
 set number
 set title
@@ -298,3 +233,68 @@ autocmd FileType ruby setl iskeyword+=?
 au BufRead,BufNewFile *.md set filetype=markdown
 "HTML
 let g_indent_inctags = "html,body,head,tbody"
+
+"lightline looks
+set laststatus=2
+
+let g:lightline = {
+			\ 'colorscheme': 'wombat',
+			\ 'mode_map': {'c': 'NORMAL'},
+			\ 'active': {
+			\   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+			\ },
+			\ 'component_function': {
+			\   'modified': 'LightLineModified',
+			\   'readonly': 'LightLineReadonly',
+			\   'fugitive': 'LightLineFugitive',
+			\   'filename': 'LightLineFilename',
+			\   'fileformat': 'LightLineFileformat',
+			\   'filetype': 'LightLineFiletype',
+			\   'fileencoding': 'LightLineFileencoding',
+			\   'mode': 'LightLineMode'
+			\ }
+			\ }
+
+function! LightLineModified()
+	return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightLineReadonly()
+	return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+endfunction
+
+function! LightLineFilename()
+	return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+				\ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+				\  &ft == 'unite' ? unite#get_status_string() :
+				\  &ft == 'vimshell' ? vimshell#get_status_string() :
+				\ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+				\ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+function! LightLineFugitive()
+	if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+		return fugitive#head()
+	else
+		return ''
+	endif
+endfunction
+
+function! LightLineFileformat()
+	return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightLineFiletype()
+	return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightLineFileencoding()
+	return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightLineMode()
+	return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+
+
