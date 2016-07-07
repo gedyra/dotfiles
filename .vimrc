@@ -73,7 +73,7 @@ if dein#load_state(s:plugin_dir)
 
 	"Coq
 	call dein#add('jvoorhis/coq.vim')
-	call dein#add('vim-scripts/CoqIDE'), {
+	call dein#d('vim-scripts/CoqIDE'), {
 				\'autoload' : {
 				\  'filetypes' : 'coq'
 				\}}
@@ -241,6 +241,7 @@ au BufRead,BufNewFile *.md set filetype=markdown
 "HTML
 let g_indent_inctags = "html,body,head,tbody"
 
+"lightline
 set laststatus=2
 
 let g:lightline = {
