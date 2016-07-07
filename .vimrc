@@ -1,5 +1,5 @@
 set encoding=utf-8
-set fileformats=unix,dos,mac
+set fileformats=unix,dos
 
 "dein Scripts-----
 
@@ -221,9 +221,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd Ctermbg=240
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven Ctermbg=234
 let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
-
-
-set background=dark
 
 "UI周り
 set number
