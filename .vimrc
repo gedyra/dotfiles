@@ -73,7 +73,7 @@ if dein#load_state(s:plugin_dir)
 
 	"Coq
 	call dein#add('jvoorhis/coq.vim')
-	call dein#d('vim-scripts/CoqIDE'), {
+	call dein#add('vim-scripts/CoqIDE'), {
 				\'autoload' : {
 				\  'filetypes' : 'coq'
 				\}}
