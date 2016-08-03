@@ -71,10 +71,6 @@ if dein#load_state(s:plugin_dir)
 	"You can specify revision/branch/tag.
 	call dein#add('Shougo/vimshell', {'rev':'3787e5'})
 
-	"Coq
-	call dein#add('jvoorhis/coq.vim')
-	call dein#add('vim-scripts/CoqIDE')
-
 	" If dependency exists
 	call dein#add('Shougo/unite.vim')
 	call dein#add('ujihisa/unite-colorscheme', {'depends' : 'Shougo-unite.vim'})
