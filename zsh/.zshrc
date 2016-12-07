@@ -1,7 +1,5 @@
+zmodload zsh/zprof
 export LANG=ja_JP.UTF-8
-
-autoload -Uz compinit
-compinit
 
 autoload -Uz colors
 colors
@@ -49,12 +47,15 @@ zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf, use:"*linux*amd6
 
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 
-if ! zplug check --verbose; then
-  printf 'Install? [y/N] '
-  if read -q; then
-    echo; zplug install
-  fi
-fi    
+#if ! zplug check --verbose; then
+#  printf 'Install? [y/N] '
+#  if read -q; then
+#    echo; zplug install
+#  fi
+#fi    
 
 zplug load --verbose
 
+if [ $ZDOTFILES/.zshrc -nt ~/.zshrc.zwc ]; then
+    zcompile ~/.zshrc
+fi
