@@ -37,19 +37,19 @@ REPORTTIME=2
 #Plugin
 source ~/.zplug/init.zsh
 
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug "b4b4r07/enhancd", use:init.sh
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
 zplug "chrissicool/zsh-256color", use:"zsh-256color.plugin.zsh"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 zplug "mafredri/zsh-async", on:sindresorhus/pure
 zplug "sindresorhus/pure"
-zplug "b4b4r07/enhancd", use:init.sh
-zplug "junegunn/fzf-bin", \
+zplug "junegunn/fzf-bin",\
     as:command, \
     from:gh-r, \
-    rename-to:fzf, \
-    use:"*linux*amd64*"
-
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
+    rename-to:fzf
 
 #if ! zplug check --verbose; then
 #  printf 'Install? [y/N] '
@@ -58,8 +58,13 @@ zplug "zsh-users/zsh-syntax-highlighting", nice:10
 #  fi
 #fi    
 
-zplug load --verbose
+zplug load
+
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd __enhancd::cd::after
 
 if [ $ZDOTFILES/.zshrc -nt ~/.zshrc.zwc ]; then
     zcompile ~/.zshrc
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
